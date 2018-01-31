@@ -58,3 +58,7 @@ h1, h2, h3, h4 {
 .post h2 a, .post h2 a:visited {
     color: var(--dark);
 }
+
+.plus {
+    font-size: 2em;
+}
