@@ -20,11 +20,17 @@
     <hr>
     <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-default">Add comment</a>
     {% for comment in post.comments.all %}
-        <div class="comment">
-            <div class="date">{{ comment.created_date }}</div>
-            <p><strong>{{ comment.author }} </strong></p>
-            <p>{{ comment.text }} </p>
-        </div>
+        {% if user.is_authenticated or comment.approved_comment %}
+            <div class="comment">
+                <div class="date">{{ comment.created_date }}</div>
+                {% if not comment.approved_comment %}
+                    <a href="{% url 'comment_remove' pk=comment.pk %}" class="btn btn-default"><span>Remove</span></a>
+                    <a href="{% url 'commend_approve' pk=comment.pk %}" class="btn btn-default"><span>Approve</span></a>
+                {% endif %}
+                <p><strong>{{ comment.author }} </strong></p>
+                <p>{{ comment.text }} </p>
+            </div>
+        {% endif %}
     {% empty %}
         <p>No comments here yet :(</p>
     {% endfor %}
